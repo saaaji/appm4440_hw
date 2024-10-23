@@ -1,0 +1,594 @@
+\documentclass{article}
+\usepackage{enumerate}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amsthm}
+\usepackage{amssymb}
+\usepackage{tcolorbox}
+\usepackage[dvipsnames]{xcolor}
+\usepackage{pgffor}
+\usepackage{multicol}
+% \renewcommand{\familydefault}{\sfdefault}
+\usepackage[a4paper, total={7.5in,10.5in}]{geometry}
+
+\usepackage{etoolbox}
+\AfterEndEnvironment{enumerate}{\vskip-\lastskip}
+
+\def\set#1{%
+    \ensuremath{%
+        \ifx!#1!\emptyset\else
+            \{%
+                \foreach[count=\i] \x in {#1}{%
+                    \ifnum\i>1,\,\fi%
+                    \x%
+                }%
+            \}
+        \fi%
+    }%
+}
+
+\renewcommand\qedsymbol{QED}
+\newtheorem{theorem}{Theorem}
+\newtheorem{lemma}[theorem]{Lemma}
+
+\title{APPM 4440 HW 6}
+\author{Siraaj Sandhu}
+\begin{document}
+\maketitle
+\color{Red}
+\begin{center}
+\begin{tabular}{|c|c|c|}
+  Problem & Self-Grade & Grade \\
+  \#1 & 5 & \\
+  \#2 & 5 & \\
+  \#3 & 5 & \\
+  \#4 & 5 & \\
+  \#5 & 5 & \\
+  \#6 & 5 & \\
+  \#7 & 5 & \\
+  \#8 & 5 & \\
+  \#9 & 5 & \\
+  \#10 & 5 & \\
+  Tot/50 & 50/50 & \\
+\end{tabular}
+\end{center}
+\color{Black}
+
+% \begin{multicols*}{2}
+\begin{enumerate}
+    % PROBLEM 1
+    \item \fbox{3.4.3} \begin{proof} Suppose that $f: D\to\mathbb{R}$ and $g:D\to\mathbb{R}$
+      are uniformly continuous. For any sequences $\set{u_n}, \set{v_n} \subset D$ s.t.
+      $\lim_{n\to\infty}[u_n-v_n] = 0$, it is thus true that $\lim_{n\to\infty}
+      [f(u_n)-f(v_n)]=0$ and $\lim_{n\to\infty}[g(u_n)-g(v_n)]=0$.
+      In other words, the sequences $F_n = f(u_n)-f(v_n)$ and $G_n = g(u_n)-g(v_n)$
+      both converge to zero. The sum of a convergent sequence is also 
+      convergent: $\lim_{n\to\infty}[F_n+G_n]=0+0=0$. If we substitute the 
+      formulae for $F_n$ and $G_n$, we get
+      \begin{align*}
+        &\lim_{n\to\infty}[(f(u_n)-f(v_n)) + g(u_n)-g(v_n)] &= 0\\
+        &\lim_{n\to\infty}[f(u_n)+g(u_n)-f(v_n)-g(v_n)] &= 0\\
+        &\lim_{n\to\infty}[f(u_n)+g(u_n)-f(v_n)-g(v_n)] &= 0\\
+        &\lim_{n\to\infty}[f(u_n)+g(u_n)-(f(v_n)+g(v_n))] &= 0\\
+        &\lim_{n\to\infty}[(f+g)(u_n)-(f+g)(v_n)] &= 0
+      \end{align*}
+      We know $\lim_{n\to\infty}[u_n-v_n]=0$ and have just shown that 
+      $\lim_{n\to\infty}[(f+g)(u_n)-(f+g)(v_n)] = 0$. By definition,
+      $f+g:D\to\mathbb{R}$ is uniformly continuous. 
+    \end{proof}
+
+    \color{Red}
+    Used properties of convergent sequences (Sum rule) rather than 
+    providing a direct $\epsilon-N$ proof of convergence, but
+    the Sum rule encapsulates the same reasoning. 5/5
+    \color{Black}
+
+    \item \fbox{3.4.6} \begin{proof} Suppose that $f:D\to\mathbb{R}$
+      $g:D\to\mathbb{R}$ are uniformly continuous. 
+      For any sequences $\set{u_n}, \set{v_n} \subset D$ s.t.
+      $\lim_{n\to\infty}[u_n-v_n] = 0$, it is thus true that $\lim_{n\to\infty}
+      [f(u_n)-f(v_n)]=0$ and $\lim_{n\to\infty}[g(u_n)-g(v_n)]=0$.
+      We will show that the product $fg:D\to\mathbb{R}$ is not necesarily
+      uniformly continuous. Suppose $f(x)=x$, $g(x)=x$, and $D=\mathbb{R}$. 
+      We can show that $f$ and $g$ are both uniformly continuous. 
+      Choose any $\set{u_n}, \set{v_n} \subset D = \mathbb{R}$
+      s.t. $\lim_{n\to\infty}[u_n-v_n] = 0$.
+      Since $f$ and $g$ are the identity functions, it
+      follows directly from this choice that 
+      $\lim_{n\to\infty}[f(u_n)-f(v_n)] = 0$ and
+      $\lim_{n\to\infty}[g(u_n)-g(v_n)] = 0$,
+      so both are uniformly continuous over $\mathbb{R}$.
+      However, $fg(x)=x^2$. We can now 
+      choose $u_n = n$ and $v_n = n-\frac{1}{n}$.
+      Clearly, $\lim_{n\to\infty}[u_n - v_n] = \lim_{n\to\infty}\frac{1}{n} = 0$.
+      However, $\lim_{n\to\infty}[fg(u_n)-fg(v_n)] = 
+      \lim_{n\to\infty}[n^2 - (n^2 - 2 + \frac{1}{n^2})] = 
+      \lim_{n\to\infty}[2 - \frac{1}{n^2}] = 2 \neq 0$.
+      So the product $fg$ is not necessarily uniformly continuous.
+    \end{proof}
+
+    \color{Red}
+    Provided the same example as on the key with the same reasoning. 5/5
+    \color{Black}
+
+    \item \fbox{3.4.10} \begin{proof}
+      Suppose $f:(a,b)\to\mathbb{R}$ is uniformly continuous. 
+      We claim $f$ is bounded on $(a,b)$.
+      Suppose not.
+      Then $\forall M>0$,
+      $\exists x_0\in (a,b)$ s.t. $|f(x_0)| > M$.
+      Since $\mathbb{N} \subset \mathbb{R}^+$,
+      we can say 
+      $\forall n\in \mathbb{N}, \exists x_n\in(a,b)$ s.t. $|f(x_n)| > n$.
+
+      \begin{lemma}
+        We claim $f(x_n)$ diverges. Suppose not.
+        Then $\exists L$ s.t. $\forall \epsilon > 0, \exists N > 0$
+        s.t. $|f(x_n) - L| < \epsilon$ for $n \geq N$.
+        It could be true that $f(x_n) > n$.
+        Then $n - L < f(x_n) - L < \epsilon$.
+        This requires $n < \epsilon + L$, but if $\epsilon + L \leq 0$,
+        this is trivially false because $n \in \mathbb{N}$. Otherwise, if $\epsilon + L > 0$,
+        the Archimedean property tells us $\exists N' \in \mathbb{N}$
+        s.t. $n > \epsilon + L$ for $n \geq N'$. Clearly, $[N', \infty) \cap [N, \infty) \neq \emptyset$,
+        implying there is some $n$ for which $n < \epsilon + L$ and $n > \epsilon + L$, 
+        which is a contradiction. If $f(x_n) \not> n$, it must be true
+        that $-f(x_n) > n$. For convergence it suffices to show $-\epsilon < f(x_n) - L < -n - L$,
+        requiring $-\epsilon < -n - L \implies n < \epsilon - L$. Similarly to 
+        the first case, if $\epsilon - L \leq 0$ this is trivially false because $n \in \mathbb{N}$.
+        Otherwise, if $\epsilon - L > 0$, the Archimedean property tells us $\exists N' \in \mathbb{N}$
+        s.t. $n > \epsilon - L$ for $n \geq N'$. Clearly, $[N', \infty) \cap [N, \infty) \neq \emptyset$,
+        implying there is some $n$ for which $n < \epsilon - L$ and $n > \epsilon - L$, 
+        which is a contradiction. In either case, given $|f(x_n)| > n$, $f(x_n)$ diverges.
+      \end{lemma}
+      By Lemma 1, $f(x_n)$ diverges and all subsequences $f(x_{n_k})$ diverge
+      because they conform to our original assumption: $|f(x_{n_k})| > n_k$. However, $x_n\subset (a, b)$ so $|x_n| \leq \max\{|a|, |b|\}$,
+      i.e. $x_n$ is bounded. Thus $x_n$ has a convergent subsequence $x_{n_k}$, which is equivalently Cauchy. Since $f$ is 
+      uniformly continuous, $\forall x, y\in (a,b), \forall \epsilon > 0, \exists \delta > 0$ s.t. $|x-y|<\delta \implies|f(x)-f(y)|<\epsilon$.
+      Since $x_{n_k}$ is Cauchy, $\forall \delta > 0, \exists N>0$ s.t. $\forall n_k, n_j \geq N, |x_{n_k} - x_{n_j}| < \delta$.
+      It follows from uniform continuity that $|f(x_{n_k}) - f(x_{n_j})| < \epsilon$ for $n_k, n_j \geq N$. In other words,
+      $f(x_{n_k})$ is Cauchy and therefore convergent. But Lemma 1 tells us that $f(x_{n_k})$ must diverge.
+      So the original assumption that $f$ is not bounded is incorrect, i.e. $f$ must be bounded.
+
+    \end{proof}
+
+    \color{Red}
+    Employ similar reasoning but use a sequence s.t. $f(x_n) > n$ and 
+    claims that subsequences of $f(x_n)$ will diverge.
+    Also uses the fact that $x_n$ contains a convergent subsequence (i.e. contains a Cauchy subsequence) 
+    to establish a contradiction because uniformly continuous functions preserve 
+    Cauchy sequences (convergent sequences). 5/5
+    \color{Black}
+
+    \item \fbox{3.4.11} 
+    \begin{proof}
+      Suppose $f:D\to\mathbb{R}$ is Lipschitz, i.e. $\exists C\geq 0$ s.t.
+      $\forall u,v\in D, |f(u)-f(v)|\leq C|u-v|$.
+      We claim $f$ is uniformly continuous.
+      If $C=0$, we see that $|f(u)-f(v)| \leq 0$. 
+      Thus for any positive $\epsilon$, 
+      we can choose any positive $\delta$.
+      If $u,v\in D$ and $|u-v| < \delta$, we can say 
+      that $|f(u) - f(v)| \leq 0 < \epsilon$. By 
+      definition $f$ is thus uniformly continuous.
+      If $C > 0$, we see that $|f(u) - f(v)| \leq C|u-v|$.
+      For any positive $\epsilon$, 
+      choose $\delta = \frac{\epsilon}{C} > 0$. 
+      Given $u,v\in D$ and $|u-v|<\delta$,
+      we see that $|f(u) - f(v)| \leq C|u-v| < C\delta = \epsilon$.
+      Since $\delta$ depends only on $\epsilon$, 
+      $f$ is uniformly continuous by definition.
+    \end{proof}
+
+    \color{Red}
+    Uses similar reasoning but 
+    proceeds using $\epsilon$-$\delta$ proof instead.
+    Believe the proof is still correct. 5/5
+    \color{Black}
+
+    \item \fbox{3.5.3}
+      \begin{proof}
+      Suppose $f:\mathbb{R}\to\mathbb{R}$ and $f(x) = x^3$. We will verify the $\epsilon$-$\delta$ criterion
+      for continuity at each point $x_0$. We must show that 
+      $\forall x_0\in\mathbb{R}, \forall \epsilon > 0, \exists \delta > 0$ s.t.
+      $x\in D \text{ and }|x-x_0| < \delta \implies |f(x) - f(x_0)| < \epsilon$.
+      Suppose $|x-x_0|<\delta$.
+      By the triangle inequality we can say $|x| = |x - x_0 + x_0| \leq |x-x_0| + |x_0| < \delta + |x_0|$.
+      We know that 
+      \begin{align*}
+        |f(x)-f(x_0)| &= |x^3-x_0^3|\\
+        &= |(x-x_0)(x^2+xx_0+x_0^2)|\\
+        &= |x-x_0||x^2+xx_0+x_0^2|
+      \end{align*}
+      By the triangle inequality we can say $|x^2 + xx_0 + x_0^2| \leq |x|^2 + |x||x_0| + |x_0|^2$.
+      We know that $|x|<\delta + |x_0|$. By definition, $|x| \geq 0$. Suppose 
+      $|x| = 0$, then because $\delta > 0 \land |x_0| \geq 0\implies 
+      \delta + |x_0| > 0$, it is true by positivity that $0^2 = 0 < (\delta + |x_0|)^2\implies |x|^2 <
+      (\delta + |x_0|)^2$.
+      Otherwise, if $|x| > 0$, we can say directly that $|x|^2 < (\delta + |x_0|)^2$.
+      If $|x| = 0$ and $|x_0| > 0$, then by positivity $|x||x_0| = 0 < (\delta + |x_0|)|x_0|$.
+      If $|x_0| = 0$, we see trivially that $|x||x_0| = 0 = (\delta + |x_0|)|x_0|$.
+      If $|x| > 0, |x_0| > 0$, then $|x| < \delta + |x_0| \implies |x||x_0| < (\delta + |x_0|)|x_0|$.
+      Thus $|x||x_0| \leq (\delta + |x_0|)|x_0|$.
+      Summing these inequalities gives $|x|^2 + |x||x_0| + |x_0|^2 < (\delta + |x_0|)^2 + (\delta + |x_0|)|x_0|
+      + |x_0|^2$. 
+      Suppose for the following that $0 < |x-x_0|$ (if $x = x_0$, we see trivially that 
+      $\forall \epsilon > 0, \forall \delta > 0, |x - x_0| = 0 < \delta \implies |f(x) - f(x_0)| = 0 < \epsilon$).
+      At this point, we could choose $\delta = \min\{1,\,\frac{\epsilon}{1+3|x_0|+3|x_0|^2}\}>0$. Then
+      \begin{align*}
+        |f(x)-f(x_0)| &= |x-x_0|||x^2+xx_0+x_0^2|\\
+        &\leq |x-x_0|(|x|^2 + |x||x_0| + |x_0|^2)\\
+        &< |x-x_0|((\delta + |x_0|)^2 + (\delta + |x_0|)|x_0| + |x_0|^2)\\
+        &< \delta((\delta + |x_0|)^2 + (\delta + |x_0|)|x_0| + |x_0|^2)\\
+        &= \delta(\delta^2 + 3\delta|x_0| + 3|x_0|^2)\\
+        &\leq \delta(1 + 3|x_0| + 3|x_0|^2), \text{ because $\delta \leq 1$}\\
+        &\leq \epsilon, \text{ because $\delta \leq \frac{\epsilon}{1+3|x_0|+3|x_0|^2}$}
+      \end{align*}
+      So $\forall x_0 \in \mathbb{R}, \forall \epsilon > 0, \exists \delta > 0 
+      \text{ s.t. } x\in D \land |x - x_0| < \delta \implies |f(x) - f(x_0)| < \epsilon$
+      given we choose $\delta = \min\{1,\,\frac{\epsilon}{1+3|x_0|+3|x_0|^2}\}$.
+      \end{proof}
+
+    \color{Red}
+    The proof arrives at the same choice of $\delta$ ($\min\{1,\,\frac{\epsilon}{1+3|x_0|+3|x_0|^2}\}$) 
+    for an $\epsilon$-$\delta$ proof of uniformy continuity with same reasoning 
+    for choosing such a $\delta$. 5/5
+    \color{Black}
+
+    \item \fbox{3.5.7} 
+    \begin{enumerate}
+      \item \begin{proof} We claim $f:[0, 1]\to\mathbb{R}$, $f(x) = \sqrt{x}$
+      is continuous. We will show first that $f$ is continuous at each $x_0\in(0, 1]$
+      and second that $f$ is continuous at $0$. 
+      For the former claim, it suffices to show
+      $\forall x_0\in(0,1], \forall \epsilon>0, \forall \delta > 0,
+      |x-x_0| < \delta \implies |f(x)-f(x_0)|<\epsilon$.
+      % We assume $x \neq x_0$, as it can trivially be shown
+      % that if $x = x_0$, $\forall x_0, \forall \epsilon > 0, \forall \delta > 0, |x - x_0| = 0 < 
+      % \delta \implies |f(x) - f(x_0)| = 0 < \epsilon$. 
+      Suppose $|x-x_0| < \delta$.
+      % By the triangle inequality, $|x| = |x - x_0 + x_0| \leq |x - x_0| + |x_0| < \delta + |x_0|$.
+      By assumption $x_0 > 0$, so we can say that $\sqrt{x_0} > 0$.
+      Since $\sqrt{x} \geq 0$, it follows that $\sqrt{x} + \sqrt{x_0} > 0$.
+      Also, $\sqrt{x} \geq 0 \implies \sqrt{x} + \sqrt{x_0} \geq \sqrt{x_0} \implies 
+      \frac{1}{\sqrt{x_0}} \geq \frac{1}{\sqrt{x} + \sqrt{x_0}}$.
+      With this in mind, let us choose $\delta = \epsilon\sqrt{x_0}$. Then
+      \begin{align*}
+        |f(x)-f(x_0)| &= |\sqrt{x} - \sqrt{x_0}|\\
+        &= \left|\frac{(\sqrt{x}-\sqrt{x_0})(\sqrt{x}+\sqrt{x_0})}{(\sqrt{x_n}+\sqrt{x_0})}\right|\\
+        &= \frac{|x-x_0|}{\sqrt{x}+\sqrt{x_0}}\\
+        &\leq\frac{|x - x_0|}{\sqrt{x_0}}\\
+        &<\frac{\delta}{\sqrt{x_0}}\\
+        &=\epsilon, \text{ after substituting for $\delta$}
+      \end{align*}
+      So $|f(x)-f(x_0)|<\epsilon \implies f$ is continuous on $(0, 1]$. 
+      At 0, we need to show that $\forall \epsilon > 0, \exists \delta > 0$
+      s.t. $|x - 0| < \delta \implies |\sqrt{x} - 0| < \epsilon$.
+      For any positive $\epsilon$, choose $\delta=\epsilon^2$. 
+      Then $|x|<\delta\implies x < \delta \implies \sqrt{x} < \sqrt{\delta} = \sqrt{\epsilon^2} = \epsilon$.
+      So $|f(x)-f(0)| < \epsilon \implies f$ is continuous at 0. Thus $f$ is continuous at each
+      $x_0\in[0,1]$.
+      \end{proof}
+
+      \item \begin{proof}
+        We claim $f:[0, 1]\to\mathbb{R}$, $f(x) = \sqrt{x}$
+        is uniformly continuous.
+        We know from (a) that $f$ is continuous on $[0,1]$.
+        The interval $[0,1]$ is closed and bounded 
+        so by Theorem 3.17 $f$ is uniformly continuous.
+      \end{proof}
+      \item\begin{proof}
+        We claim $f:[0, 1]\to\mathbb{R}$, $f(x) = \sqrt{x}$
+        is not a Lipschitz function.
+        Suppose not, i.e. $f$ is a Lipschitz function.
+        Then by definition, 
+        $\exists C \geq 0$ s.t.
+        $\forall u,v\in [0,1], |f(u)-f(v)|\leq C|u-v|$.
+        So $|\sqrt{u}-\sqrt{v}|\leq C|u-v|$.
+        We could then choose $u=\frac{1}{n^2}$ 
+        and $v=0$ and expect that 
+        $|\frac{1}{n} - 0| \leq C|\frac{1}{n^2} - 0|$.
+        Restrict $n$ to $n\in\mathbb{N}$ and we get
+        $\frac{1}{n}\leq C\frac{1}{n^2}\implies \forall n\in \mathbb{N}, n \leq C$.
+        By definition $n$ will diverge (converge to infinity) and 
+        thus a finite bound $C$ does not exist, which is a contradiction.
+        Thus $f$ is not a Lipschitz function. 
+      \end{proof}
+    \end{enumerate}
+
+    
+    \color{Red}
+    Uses nearly identical $\epsilon$-$\delta$ proof for (a) with same choice of $\delta$. 
+    Uses same theorem for (b). 
+    Uses similar reasoning as key to show that no finite $C$ 
+    satisfies criterion for uniform continuity. 5/5
+    \color{Black}
+
+    \item \fbox{3.5.8}
+    \begin{proof}
+      We claim that if a continuous function $f:\mathbb{R}\to\mathbb{R}$ is
+      periodic, then it is uniformly continuous.
+      By periodic we mean $\exists p > 0$ s.t.
+      $\forall x, f(x+p) = f(x)$.
+      % Since $f$ is continuous, 
+      % we can say that $\forall x_0\in \mathbb{R}, \forall \epsilon > 0, 
+      % \exists \delta > 0, |x-x_0| < \delta \implies |f(x) - f(x_0)| < \epsilon$.
+      % Consider the compact interval $[0, p]$.
+      We know that $f$ is continuous so 
+      $f$ is uniformly continuous 
+      on the compact interval $[0, p]$.
+      That is,
+      $\forall x, x_0 \in [0, p], \forall \epsilon > 0, \exists \delta > 0$
+      s.t. $|x-x_0|<\delta \implies |f(x)-f(x_0)| < \epsilon$.
+      
+      \begin{lemma}
+        We claim for any real number $y$ that $\exists k \in \mathbb{Z}$ 
+        s.t. $y\in[k, k+1)$.
+        Suppose $y > 0$. The Archimedean principle
+        tells us that $\exists n \in \mathbb{N}$ s.t.
+        $y < n$. That is,
+        the set $A=\set{x\in \mathbb{N} | y < x}$
+        is nonempty and bounded below by construction.
+        So $\exists n'=\inf{A}$ and we claim $n' \in A$.
+        Suppose not. Then the next greatest number that 
+        could belong to $A$ is $n'+1$, i.e. 
+        $\forall a\in A, n'+1 \leq a$,
+        but this implies that $n'$ is 
+        not the greatest lower bound, because $n' < n'+1$.
+        Thus $n' \in A$.
+        So given $n' = \min{A}$,
+        we know $n'-1 \not\in A\implies n'-1 \leq y\implies n'-1\leq y < n'$.
+        Choose $k = n' - 1 \in \mathbb{Z}$. We see that $y\in[k, k+1)$.
+        Now suppose $y = 0$. Choose $k=0$ and we see that $y\in[k, k+1) = [0, 1)$.
+        Now suppose $y < 0$.
+        Since $0 \in \mathbb{Z}$, we know 
+        the set $A = \set{x \in \mathbb{Z} | y < x}$ is nonempty (it at least contains 0)
+        and bounded below by construction.
+        Using the same logic we applied in the $y>0$ case,
+        we know $\exists n'\in A$ s.t. $n' = \min{A}$.
+        Thus $n' - 1 \not\in A \implies n'-1 \leq y$.
+        Again, we can choose $k = n' - 1 \implies k \leq y < k+1
+        \implies y \in [k, k+1)$.
+      \end{lemma}
+      By Lemma 2, we can choose any $x\in\mathbb{R}$ and say 
+      that $\exists k\in \mathbb{Z}$ s.t. $\frac{x}{p}\in [k, k+1)$.
+      So $k \leq \frac{x}{p} < k+1 \implies kp \leq x < (k+1)p
+      \implies 0\leq x-kp < p$.
+      Now, choose any $x', x_0' \in \mathbb{R}$.
+      We know $\exists j, k\in\mathbb{Z}$ 
+      s.t. $x' - jp \in [0, p]$ and $x_0' - kp \in [0, p]$.
+      Observe that if $j,k = 0$, then $x, x_0\in [0, p]$
+      and $f$ is uniformly continuous at $x_0$.
+      Otherwise, if $j < 0$ we see 
+      that 
+      \begin{align*}
+        f(x' - jp) &= f(x' - (j + 1)p + p) = f(x' - (j + 1)p)\\
+        &= f(x' - (j + 2)p + p) = f(x' - (j + 2)p)\\
+        &= \cdots\\
+        &= f(x' - (j + n)p + p) = f(x' - (j + n)p), \text{ where $n \in \mathbb{N}$}\\
+        &= \cdots\\
+        &= f(x'), \text{ because eventually $n = -j$}
+      \end{align*}
+      The same logic demonstrates that $f(x_0' - kp) = f(x_0')$ if $k < 0$.
+      Observe also that $x = x - p + p \implies f(x - p + p) = f(x - p) = f(x)$.
+      Then, if $j > 0$,
+      \begin{align*}
+        f(x' - jp) &= f(x' - (j - 1)p - p) = f(x' - (j - 1)p)\\
+        &= f(x' - (j - 2)p - p) = f(x' - (j - 2)p)\\
+        &= \cdots\\
+        &= f(x' - (j - n)p - p) = f(x' - (j - n)p), \text{ where $n \in \mathbb{N}$}\\
+        &= \cdots\\
+        &= f(x'), \text{ because eventually $n = -j$}
+      \end{align*}
+      The same logic demostrates that $f(x_0' - kp) = f(x_0')$ if $k > 0$.
+      Now suppose $x = x' - jp \in [0, p]$,
+      $x_0 = x_0' - kp \in [0, p]$.
+      We want to show that $\forall x', x_0' \in \mathbb{R}, \forall \epsilon > 0,
+      \exists \delta >0$ s.t. $|x'-x_0'| < \delta \implies |f(x')-f(x_0')| < \epsilon$.
+      Let us restrict $j=k$, then $|x' - x_0'| < \delta$ whenever
+      $|x - x_0| < \delta$, because $|x - x_0| = |x' - jp - (x_0' - kp)| = 
+      |x' - x_0' + kp - jp| = |x' - x_0'|$.
+      Since $f$ is uniformly continous on $[0, p]$,
+      we can say that $\forall \epsilon > 0, \exists \delta(\epsilon) > 0$
+      s.t. $|x - x_0| = |x' - x_0'| < \delta \implies |f(x) - f(x_0)| = 
+      |f(x' - jp) - f(x_0' - kp)| = |f(x') - f(x_0')| < \epsilon$.
+      By definition, $f$ is therefore uniformly continuous for all reals.
+      
+    \end{proof}
+
+    \color{Red}
+    Uses slightly more involved reasoning than key but main 
+    points of the proof are nearly identical with the key. 5/5
+    \color{Black}
+
+    \item \fbox{3.6.2}
+    \begin{enumerate}
+      \item Observe that $2x-1$ and $x^2 - x$ are continuous on $(0, 1)$ because
+      they are both polynomials. Since $x^2 - x = x(x-1) \neq 0$
+      on the interval $(0, 1)$, the function $f(x) = \frac{2x-1}{x(x-1)}$
+      is continuous on $(0, 1)$.
+      Now consider the interval $[\frac{1}{2n}, 1-\frac{1}{2n}]$.
+      .
+      Observe that $f(\frac{1}{2n}) = \frac{1 - n}{1-2n}4n$,
+      and that $f(\frac{1}{2n}) - (n-1) = \frac{-((n-1)^2 + n(n+1) - 2)}{1-2n}$.
+      Since $n\in\mathbb{N}$, $n\geq 1$, and thus the numerator 
+      and denominator will always be negative (since $(n-1)^2 \geq 0$ and 
+      $n(n+1) - 2 \geq 0$), indicating that this quantity is positive,
+      i.e. $f(\frac{1}{2n}) \geq n-1$. It is clear that $n-1$
+      is unbounded above, so it follows that $f(\frac{1}{2n})$ 
+      is unbounded above as $n\to\infty$.
+      Similarly,
+      we see that $f(1-\frac{1}{2n}) = -\frac{1-n}{1-2n}4n
+      \implies f(1-\frac{1}{2n}) \leq 1-n$, using 
+      the logic from above. Clearly $1-n$ 
+      is unbounded below,
+      so it follows that $f(1-\frac{1}{2n})$
+      is unbounded below as $n\to\infty$.
+      So $f(1-\frac{1}{2n})\leq f(\frac{1}{2n})$.
+      They are only equal when $n=1$,
+      so let us consider $f$ on
+      intervals $[\frac{1}{2n}, 1-\frac{1}{2n}]$
+      where $n>1$.
+      We can choose any $c\in\mathbb{R}$
+      and we know, because 
+      $f(\frac{1}{2n})$ is 
+      not bounded above
+      and $f(1-\frac{1}{2n})$
+      is not bounded below,
+      that there will exist an $n$ large enough
+      s.t. $f(1-\frac{1}{2n}) < c < f(\frac{1}{2n})$.
+      IVT tells us there must be an $x_0\in
+      \bigcup\limits_{n=1}^{\infty} [\frac{1}{2n}, 1-\frac{1}{2n}] = (0, 1)$ 
+      s.t. $f(x_0) = c$, i.e. the image of $f$ is $\mathbb{R}$.
+
+      \item We know $\sin x$ is continuous and bounded: $|\sin x| \leq 1$.
+      So, $-1 \leq \sin x \leq +1 \implies 0 \leq \sin x + 1 \leq 2
+      \implies 0\leq \frac{1}{2}(\sin x + 1) \leq 1$.
+      If we introduce some scaling factor $k=2\pi$,
+      then we see that $f(x) = \frac{1}{2}(\sin 2\pi x + 1)$
+      will map from $(0, 1)$ to $[0, 1]$.
+      For $x = \frac{1}{4}, f(x)=1$,
+      and for $x=\frac{3}{4}, f(x)=0$.
+      IVT tells us for any number $c$
+      s.t. $c\in (f(\frac{3}{4}), f(\frac{1}{4})) = (0, 1),
+      \exists x_0\in (\frac{1}{4}, \frac{3}{4})\subset (0, 1)$
+      s.t. $f(x_0)=c$.
+      So we can say $f$ maps from $(0, 1)$
+      to $[0, 1]$, as $0 \leq f(x) \leq 1$
+      and IVT showed us that the image is an interval.
+      Moreover, $f$ is continuous because
+      it was defined via compositions,
+      sums, and products of continuous functions.
+
+      \item We suggest the inverse of the 
+      function $f:(-1, 1)\to \mathbb{R}, f(x) = \frac{x}{\sqrt{1-x^2}}$.
+      We suggset $f$ is continuous because
+      $1-x^2 > 0$ on the interval $(-1,1)$ and thus
+      the composition $\sqrt{1-x^2}$ will be continuous,
+      and thus the quotient $\frac{x}{\sqrt{1-x^2}}$ will be continuous.
+      We can show that $f$ is strictly increasing.
+      Suppose $u > v$.
+      Then
+      \begin{align*}
+        u^2 &> v^2\\
+        u^2 -u^2v^2 &> v^2 - u^2v^2\\
+        u^2(1-v^2) &> v^2(1-u^2)\\
+        u\sqrt{1-v^2} &> v\sqrt{1-u^2}\\
+        \frac{u}{\sqrt{1-u^2}} &> \frac{v}{\sqrt{1-v^2}}\\
+        f(u) &> f(v)
+      \end{align*}
+      We can show that $f((-1, 1)) = \mathbb{R}$.
+      Consider the interval $[-1 + \frac{1}{n+1/2}, 1 - \frac{1}{n+1/2}]$.
+      We see that $f(1 - \frac{1}{n+1/2}) = \frac{n-1/2}{\sqrt{2n}} = \sqrt{n/2}-\frac{1}{2\sqrt{2n}}$.
+      The second term converges to zero but we see that the first term is unbounded above,
+      thus $f(1 - \frac{1}{n+1/2})$ is unbounded above as $n\to\infty$.
+      We also see that $f(-1 + \frac{1}{n+1/2}) = \frac{1/2-n}{\sqrt{2n}} = \frac{1}{2\sqrt{2n}}-\sqrt{n/2}$.
+      The first term converges to zero but we see that the second term is unbounded below,
+      thus $f(-1 + \frac{1}{n+1/2})$ is unbounded below as $n\to\infty$.
+      So we can choose any $c\in\mathbb{R}$ and say that there exists $n$ 
+      large enough s.t. $f(-1 + \frac{1}{n+1/2}) < c < f(1 - \frac{1}{n+1/2})$.
+      IVT tells us there must be an $x_0\in \bigcup\limits_{n=1}^{\infty}[-1 + \frac{1}{n+1/2}, 1 - \frac{1}{n+1/2}]
+      =(-1, 1)$ s.t. $f(x_0)=c$, i.e. the image of $f$ is $\mathbb{R}$.
+      Theorem 3.29 tells us that since $f$ is strictly increasing
+      over the interval $(-1,1)$,
+      its inverse $f^{-1}: \mathbb{R}\to (-1, 1)$
+      is continuous, strictly increasing (shown in class), and maps $\mathbb{R}$ to $(-1, 1)$. 
+      We see that $f^{-1}(x) = \frac{x}{\sqrt{1+x^2}}$.
+    \end{enumerate}
+
+    
+    \color{Red}
+    Uses different examples than key but I believe an adequate justification is 
+    provided for each. 5/5
+    \color{Black}
+
+    \item \fbox{3.6.4} 
+    \begin{proof}
+      Define 
+      \[
+        f(x) = \begin{cases}
+          x-1 & x < 0\\
+          x+1 & x \geq 0\\
+        \end{cases}
+      \]
+      We will show that $f$ is strictly increasing.
+      We must show that given $u,v\in\mathbb{R}$
+      s.t. $u > v$, 
+      $f(u) > f(v)$.
+      If we restrict both $u,v<0$
+      or both $u,v\geq 0$,
+      it follows directly that $f(u) > f(v)$
+      because $u > v \implies u - 1 > v - 1$
+      and $u > v \implies u + 1 > v + 1$.
+      Now suppose $u\geq 0$ and $v < 0$.
+      Then $f(u) = u + 1$ and $f(v) = v - 1$.
+      Clearly $v - 1 < v < u < u + 1$,
+      so $f(u) > f(v)$.
+      Note that $u < 0$ and $v \geq 0$
+      is not possible because it contradicts
+      our assumption that $u > v$.
+      Since $f$ is strictly increasing
+      and maps $\mathbb{R}$, an interval,
+      to $\mathbb{R}$, 
+      we know by Theorem 3.29
+      that $f^{-1}: f(\mathbb{R}) \to \mathbb{R}$
+      is continuous.
+      We see that $f(\mathbb{R}) = (-\infty, -1)\cap[1, \infty)$.
+      Since $1 \in [1, \infty)$, i.e. 
+      1 is in the image of $f$ (its preimage is 
+      $x=0\implies f(x)=f(0)=0+1=1$),
+      we can say that $f^{-1}$
+      is continuous at 1.
+    \end{proof}
+    
+    \color{Red}
+    We use similar reasoning as key to prove strictly increasing property. 
+    Uses Theorem 3.29 instead of directly proof of continuity to 
+    establish continuity of the inverse, but I believe the reasoning is 
+    still valid. 5/5
+    \color{Black}
+
+    \item \fbox{3.6.13} \begin{proof}
+      Let $f:[a,b]\to\mathbb{R}$
+      be continuous and one-to-one
+      s.t. $f(a)<f(b)$.
+      Let $c$ be a point in the open interval $(a,b)$.
+      We will show that $f(a) < f(c) < f(b)$.
+      Suppose this is not the case,
+      i.e. $f(c) \leq f(a)$ 
+      or $f(c) \geq f(b)$.
+      Since $f$ is one-to-one,
+      $f(c) = f(a)\implies c=a$,
+      which is a contradiction,
+      since $c \in (a,b)$.
+      The same follows for $f(b)$,
+      and thus $f(c) \neq f(a)$
+      and $f(c) \neq f(b)$.
+      So it must be true
+      that $f(c) < f(a)$
+      or $f(c) > f(b)$.
+      Consider the case where $f(c) < f(a)$.
+      Choose any $d$
+      s.t. $f(c) < d < f(a)$.
+      Then it is also true that 
+      $f(c) < d < f(b)$.
+      By IVT, we 
+      know $\exists x_0, x_0'$
+      s.t. $x_0 \in (a, c)$ and $f(x_0) = d$,
+      and $x_0'\in (c, b)$ and $f(x_0') = d$.
+      Therefore $f(x_0)=f(x_0')\implies x_0=x_0'$ 
+      because $f$ is one-to-one.
+      But $(a, c) \cap (c, b) = \emptyset$ 
+      because $a < c < b$. Therefore
+      $x_0 \neq x_0'$,
+      violating the premise that $f$ was one-to-one.
+      Therefore $f(a) < f(c) < f(b)$.
+    \end{proof}
+
+    \color{Red}
+    Uses nearly identical proof by contradiction with 
+    same cases as key, and arrives at same conclusion. 5/5
+    \color{Black}
+\end{enumerate}
+% \end{multicols*}
+\end{document}

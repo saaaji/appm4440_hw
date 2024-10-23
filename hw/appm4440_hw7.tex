@@ -1,0 +1,475 @@
+\documentclass{article}
+\usepackage{enumerate}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amsthm}
+\usepackage{amssymb}
+\usepackage{tcolorbox}
+\usepackage[dvipsnames]{xcolor}
+\usepackage{pgffor}
+\usepackage{multicol}
+% \renewcommand{\familydefault}{\sfdefault}
+\usepackage[a4paper, total={7.5in,10.5in}]{geometry}
+
+\usepackage{etoolbox}
+\AfterEndEnvironment{enumerate}{\vskip-\lastskip}
+
+\def\set#1{%
+    \ensuremath{%
+        \ifx!#1!\emptyset\else
+            \{%
+                \foreach[count=\i] \x in {#1}{%
+                    \ifnum\i>1,\,\fi%
+                    \x%
+                }%
+            \}
+        \fi%
+    }%
+}
+
+\renewcommand\qedsymbol{QED}
+\newtheorem{theorem}{Theorem}
+\newtheorem{lemma}[theorem]{Lemma}
+\renewcommand{\familydefault}{\sfdefault}
+
+\title{APPM 4440 HW 7}
+\author{Siraaj Sandhu}
+\begin{document}
+\maketitle
+% \color{Red}
+% \begin{center}
+% \begin{tabular}{|c|c|c|}
+%   Problem & Self-Grade & Grade \\
+%   \#1 & 5 & \\
+%   \#2 & 5 & \\
+%   \#3 & 5 & \\
+%   \#4 & 5 & \\
+%   \#5 & 5 & \\
+%   \#6 & 5 & \\
+%   \#7 & 5 & \\
+%   \#8 & 5 & \\
+%   \#9 & 5 & \\
+%   \#10 & 5 & \\
+%   Tot/50 & 50/50 & \\
+% \end{tabular}
+% \end{center}
+\color{Black}
+
+% \begin{multicols*}{2}
+\begin{enumerate}
+    % PROBLEM 1
+    \item \fbox{3.6.8}
+    \begin{proof}
+      We claim that there does not exist a 
+      strictly increasing function $f:\mathbb{Q}\to\mathbb{R}$ 
+      s.t. $f(\mathbb{Q}) = \mathbb{R}$. 
+      By way of contradiction, suppose such a 
+      function $f$ does exist, i.e. 
+      $f: \mathbb{Q}\to\mathbb{R}$ 
+      is strictly increasing and $f(\mathbb{Q}) = \mathbb{R}$.
+      Since $f$ is strictly increasing, it is one-to-one and thus 
+      has an inverse, $f^{-1}: f(\mathbb{Q}) \to \mathbb{R}$. 
+      Note that $f^{-1}$ is also strictly increasing (shown in class). 
+      % By Theorem 3.23, $f$ is continuous because it is 
+      % monotone and its image, $f(\mathbb{Q}) = \mathbb{R}$, 
+      % is an interval. 
+      Consider some $y_n, y_0 \in f(\mathbb{Q})$. Denote 
+      $x_n = f^{-1}(y_n)$. 
+      Choose any $\epsilon > 0$ and let 
+      $u = f(x_n - \epsilon)$ and 
+      $v = f(x_n + \epsilon)$. 
+      Since $f$ is strictly increasing, 
+      $y_n - u > 0$ and $v - y_n > 0$. 
+      At this point, we can pick 
+      $\delta = \min\{y_n - u,\,v - y_n\} > 0$. 
+      Assume $|y_n - y_0| < \delta$. 
+      Then \begin{align*}
+        |y_n - y_0| < \delta &\implies -\delta < y_n - y_0 < \delta\\
+        &\implies -\delta < y_0 - y_n < \delta\\
+        &\implies u - y_n \leq -\delta < y_0 - y_n < \delta \leq v - y_n\\
+        &\implies f(x_n - \epsilon) = u < y_0 < v = f(x_n + \epsilon)\\
+        &\implies x_n - \epsilon < f^{-1}(y_0) < x_n + \epsilon,\text{ because $f^{-1}$ is strictly increasing}\\
+        &\implies f^{-1}(y_n) - \epsilon < f^{-1}(y_0) < f^{-1}(y_n) + \epsilon\\
+        &\implies |f^{-1}(y_0) - f^{-1}(y_n)| < \epsilon\\
+        &\implies |f^{-1}(y_n) - f^{-1}(y_0)| < \epsilon
+      \end{align*}
+      So $\forall \epsilon > 0, \exists \delta > 0$ s.t. 
+      $\forall y_n, y_0 \in f(\mathbb{Q}), |y_n - y_0| < \delta
+      \implies |f^{-1}(y_n) - f^{-1}(y_0)| < \epsilon$, i.e. 
+      $f^{-1}$ is continuous. 
+      However, by Corollary 3.25, 
+      since $f(\mathbb{Q}) = \mathbb{R}$, i.e. 
+      its domain is an interval, 
+      $f^{-1}$ is not continuous because 
+      its image, $f^{-1}(f(\mathbb{Q})) = 
+      f^{-1}(\mathbb{R}) = \mathbb{Q}$ 
+      is not an interval.
+      This is a contradiction, and thus 
+      such a function defined as $f$ has been does not exist.
+    \end{proof}
+    \item \fbox{3.7.12}
+    \begin{proof}
+      Suppose for $a,b\in\mathbb{R}$ that $a<b$ and 
+      let $I = (a,b)$. Suppose also that the function 
+      $f: I\to\mathbb{R}$ is monotonically increasing and bounded. 
+      We claim $\lim_{x\to a}f(x)$ exists. 
+      Consider some $\set{x_n} \subset I$ (by 
+      construction, $a\not\in \set{x_n}$).
+      Suppose also that $\lim_{n\to\infty}x_n = a$.
+      So $\forall \delta>0, \exists N \in \mathbb{N}$ 
+      s.t. $\forall n \geq N, |x_n - a| < \delta$.
+      To prove existence of $\lim_{x\to a}f(x)$, 
+      we need to show that the convergence of $x_n$ to $a$ 
+      implies the convergence of $f(x_n)$ to $L$.
+      % wts: when xn in D-x0 converges to x0, then f(xn) -> l which exists
+      % Pick any $\set{x_n}\in (a, b)$ s.t. 
+      % $\lim_{n\to\infty}x_n = a$. By construction $a\not\in \set{x_n}$.
+      % % and $|x_n| \leq \max\{|a|,\,|b|\}$, i.e. $x_n$ is bounded.
+      % We know $x_n$ has some monotone subsequence $x_{n_k}\to a$.
+      % We expect $x_{n_k}$ to be monotonically decreasing 
+      % because $a < x_{n_k}$. 
+      % So given $k' > k$, 
+      % we can say $x_{n_{k'}} \leq x_{n_k} \implies f(x_{n_{k'}}) \leq f(x_{n_k})$.
+      % So $f(x_{n_k})$ is a monotonically decreasing, bounded sequence. 
+      % By MCT, $f(x_{n_k})$ must converge to $L=\inf f(x_{n_k})$.
+      % % Then it is true that $\forall\epsilon > 0,\,\exists K > 0$ s.t. 
+      % % $\forall k \geq K,\,|f(x_{n_k}) - L| < \epsilon
+      % % \implies L \leq f(x_{n_k}) < \epsilon + L$.
+      % Now consider $x_n$ again: 
+      % since it converges to $a$ 
+      % we know $\forall\epsilon>0,\,\exists N>0$ s.t. 
+      % $\forall n \geq N,\, |x_n - a| < \epsilon$.
+      Choose any $\epsilon > 0$. 
+      As $f$ is bounded below, 
+      we can denote $L = \inf f(I)$.
+      By definition, $-\epsilon + L < f(x_n)$.
+      Then, since $L$ is the infimum 
+      of $f(I)$, it follows that 
+      $\epsilon + L$ is not a lower bound on $f(I)$.
+      So $\exists y \in f(I)$ s.t. $y < L + \epsilon
+      \implies \exists x'\in I$ s.t. $y=f(x') < L + \epsilon$.
+      Since $f$ is monotonically increasing, 
+      if we restrict $x_n < x'\implies f(x_n) \leq f(x')$.
+      So, when $a < x_n < x'$, it is true that 
+      $-\epsilon + L < f(x_n) < \epsilon + L\implies |f(x) - L| < \epsilon$.
+      So we can choose $\delta = x' - a > 0$ because $x' \in I$ and 
+      we know $x'$ will always exist.
+      Then, $|x_n - a| < \delta = x' - a \implies x_n - a < x' - a \implies 
+      x_n < x'$. We already know $a < x_n$, 
+      so by our reasoning from before 
+      we know that $\forall \epsilon > 0,\, \exists \delta > 0 \text{ s.t. } |x_n - a| < \delta \implies |f(x_n) - L| < \epsilon$, 
+      i.e. $f(x_n)\to L$ whenever $x_n \to a$, given $n \geq N$. 
+      So $\lim_{x\to a} f(x) = L$, i.e. the limit exists. 
+
+
+    \end{proof}
+    \item \fbox{4.1.5}
+    \begin{enumerate}
+      \item We want 
+      to evaluate $\lim_{x\to0}\frac{x^2}{x}
+      =\lim_{x\to 0}\frac{x^2 - 0^2}{x - 0}$.
+      Let $f(x) = x^2$ then we see the 
+      desired quantity is $f'(0)$. 
+      Prop 4.4 tells us $f'(0) = 2(0)^{2-1} = 0$.
+      \item We want to find 
+      $\lim_{x\to1}\frac{x^2-1}{\sqrt{x}-1}$. Let $y=\sqrt{x}$. 
+      Then $x^2=y^4$, and 
+      because $y$ is 
+      continuous on $[0,\infty)$, 
+      we can just find $\lim_{y\to1}
+      \frac{y^4 - 1^4}{y - 1}$.
+      Let $f(x)=x^4$ then we see the 
+      desired quantity is $f'(1)$. 
+      By Prop 4.4, 
+      $f'(1) = 4(1)^{4-1} = 4$.
+      
+      % \item The numerator 
+      % and denominator are 
+      % both continuous at 0, 
+      % and the denominator is nonzero 
+      % at $x=0$, so we can proceed by 
+      % direct substitution:
+      % $\lim_{x\to0}\frac{x-1}{\sqrt{x}-1}=\frac{0-1}{0-1}=1$.
+      \item We want to find $\lim_{x\to 1}\frac{x-1}{\sqrt{x}-1}$.
+      Let $y=\sqrt{x}$. Then $x=y^2$, and because $y$ is 
+      continuous on $[0, \infty)$ we can just find 
+      $\lim_{y\to1}\frac{y^2-1^2}{y-1}$. Let $f(x) = x^2$. 
+      Then we see the desired quantity is just $f'(1)$. By 
+      Prop 4.4, $f'(1) = 2(1)^{2-1} = 2$.
+      
+      \item Observe that 
+      $\lim_{x\to2}\frac{x^4-16}{x-2}
+      =\lim_{x\to2}\frac{(x-2)(x^3+2x^2+4x+8)}{x-2}
+      =\lim_{x\to2}(x^3+2x^2+4x+8)=8+8+8+8=32$.
+    \end{enumerate}
+    \item \fbox{4.1.9}
+    \begin{proof}
+      Suppose that 
+      $f:\mathbb{R}\to\mathbb{R}$ 
+      has the property that 
+      $-x^2\leq f(x)\leq x^2$ for all $x$.
+      We will show that $f$ is 
+      differentiable at 0 and that $f'(0)=0$.
+      It suffices to show 
+      that $\lim_{x\to0}\frac{f(x)-f(0)}{x-0}=0$.
+      This is the same as showing 
+      that given $\set{x_n}\in\mathbb{R}\setminus\set{0}$,
+      $\lim_{n\to\infty}x_n = 0 \implies
+      \lim_{n\to\infty}\frac{f(x_n)-f(0)}{x_n-0}=0$.
+      % or 
+      % $\forall \epsilon > 0,\,\exists N\in\mathbb{N} \text{ s.t. }
+      % \forall n\geq N,\, \left|\frac{f(x_n)-f(0)}{x_n}\right| < \epsilon
+      % \implies -\epsilon < \frac{f(x_n)-f(0)}{x_n} < \epsilon$.
+      Since $x^2$ is differentiable (Prop 4.4) and $\lim_{n\to\infty}x_n = 0$,
+      $\forall\epsilon>0,\,\exists N\in\mathbb{N}\text{ s.t. }
+      \forall n\geq N,\, \left|\frac{x_n^2 - 0^2}{x_n - 0}\right| < \epsilon
+      \implies \left|\frac{-x_n^2+0^2}{x_n-0}\right| < \epsilon$.
+      If $x_n<0$, then $-\epsilon<\frac{x_n^2}{x_n} \leq \frac{f(x_n)}{x_n} \leq \frac{-x_n^2}{x_n}<\epsilon$.
+      If $x_n>0$, then $-\epsilon<\frac{-x_n^2}{x_n} \leq \frac{f(x_n)}{x_n} \leq \frac{x_n^2}{x_n}<\epsilon$.
+      In either case, $\left|\frac{f(x_n)}{x_n}\right| < \epsilon$.
+      Observe that $-x^2\leq f(x) \leq x^2\implies -0^2 \leq f(0) \leq 0^2 \implies 
+      f(0)=0$. So $\left|\frac{f(x_n)}{x_n}\right| = \left|\frac{f(x_n)-f(0)}{x_n-0}\right| < \epsilon$.
+      Thus $\forall\epsilon>0,\,\exists N\in\mathbb{N} \text{ s.t. }
+      \forall n\geq N,\,\left|\frac{f(x_n)-f(0)}{x_n-0}\right| < \epsilon$, or  
+      $\lim_{n\to\infty}\frac{f(x_n)-f(0)}{x_n-0}=0$ whenever $\lim_{n\to\infty}x_n = 0$. 
+      Thus $f$ is differentiable at zero and $f'(0)=0$.
+      % \implies \frac{-x_n^2+0^2}{x_n - 0}\leq f(x_n)$
+      %-x_n^2\leq f(x_n)\leq x_n^2
+      % \implies -x_n^2 + $
+      
+    \end{proof}
+    \item \fbox{4.1.11}
+    \begin{proof}
+      Suppose 
+      $g:\mathbb{R}\to\mathbb{R}$ 
+      is differentiable at 0 and that 
+      for each $n\in\mathbb{N}$, 
+      $g(1/n)=0$. We will show that 
+      $g(0)=0$ and $g'(0)=0$.
+      Since $g$ is differentiable 
+      at 0, $g$ is continuous at 0 
+      and thus given $\set{x_n}\in\mathbb{R}$,
+      $x_n\to 0$, 
+      we know that $g(x_n)\to g(0)$. 
+      We can pick $x_n=\frac{1}{n}$ and 
+      we know that $x_n\to 0$. 
+      It is clear that $g(x_n) = 0
+      \implies g(0)=0$.
+      We know $g$ is differentiable 
+      at zero so 
+      it is true for any sequence
+      $\set{u_n}\in\mathbb{R}\setminus\set{0}$ 
+      chosen s.t. $u_n\to 0$ 
+      that $g'(0)=\lim_{n\to\infty}\frac{g(u_n)-g(0)}{u_n-0}$.
+      In this case, we may reuse $\set{x_n}$. 
+      % because $0\not\in\set{x_n}=\frac{1}{n}$ for $n\in\mathbb{N}$.
+      Observe that 
+      $g'(0)=\lim_{n\to\infty}\frac{g(x_n)-g(0)}{x_n-0}
+      =\lim_{n\to\infty}\frac{g(1/n)}{1/n}
+      =\lim_{n\to\infty}(n\cdot 0)=0$.
+    \end{proof}
+    \item 
+      A function $f:D\to\mathbb{R}$ is 
+      Lipschitz if 
+      $\exists C\geq 0$ 
+      s.t. 
+      $\forall u,\,v\in D,\,
+      |f(u)-f(v)|\leq C|u-v|$.
+
+      \begin{enumerate}
+        \item We claim the function $f(x)=|x|$ is 
+        Lipschitz continuous everywhere but not differentiable everywhere on the real line.
+        Observe that, given $u,\,v\in \mathbb{R}$, 
+        $||u|-|v|| \leq |u - v|$ by the triangle inequality (proven in previous homework). 
+        If we pick $C=1$, it is clear that $f$ is Lipschitz continuous everywhere on the real line.
+        However, $f$ is not differentiable at zero. 
+        Choose $u_n = \frac{-1}{n}$ and 
+        $v_n = \frac{1}{n}$.
+        Note that $0\not\in \set{u_n}$ and $0\not\in \set{v_n}$ but $u_n\to 0$ and $v_n\to 0$.
+        Observe that $\lim_{n\to\infty}\frac{f(u_n) - f(0)}{u_n - 0}
+        =\lim_{n\to\infty}\frac{|\frac{-1}{n}| - 0}{\frac{-1}{n} - 0}
+        =\lim_{n\to\infty}\frac{\frac{1}{n}}{\frac{-1}{n}}=-1$.
+        However, $\lim_{n\to\infty}\frac{f(v_n)-f(0)}{v_n-0}
+        =\lim_{n\to\infty}\frac{|\frac{1}{n}|-0}{\frac{1}{n}-0}
+        =\lim_{n\to\infty}\frac{\frac{1}{n}}{\frac{1}{n}}=1$.
+        So $\lim_{x\to0}\frac{f(x) - 0}{x - 0}$ does not exist 
+        because all sequences in $\mathbb{R}$ do not converge 
+        to the same limit, i.e. $f$ is not differentiable at zero.
+        \item We claim the function $f(x)=x^2$ is 
+        differentiable everywhere but not Lipschitz continuous everywhere on the real line. 
+        By Prop 4.4, $f$ is differentiable everywhere in $\mathbb{R}$ because 
+        $x^2$ is a positive integral power of $x$. 
+        Now suppose that $f$ is Lipschitz continuous. 
+        Then $\exists C \geq 0$ s.t. 
+        $\forall u,\,v\in \mathbb{R},\, |f(u)-f(v)|\leq C|u-v|
+        \implies |u^2-v^2| \leq C|u-v|$.
+        Choose $u_n=n$, $v_n=0$. 
+        Then $|n^2 - 0^2| \leq C|n - 0| \implies n^2 \leq Cn \implies n \leq C$ for all 
+        natural numbers $n$. The Archimedean property tells us there is no 
+        finite $C$ that satisfies this requirement, so $f$ is not 
+        Lipschitz continuous everywhere on the real line.
+      \end{enumerate}
+    \item \fbox{4.2.1}
+      Suppose $f:\mathbb{R}\to\mathbb{R}$ and $g:\mathbb{R}\to\mathbb{R}$ 
+      are differentiable and define $h\equiv f\circ g: \mathbb{R}\to\mathbb{R}$.
+      We also know that 
+      $g(1)=2,\, g(2)=1,\, f'(1)=-1,\, f'(2)=2,\, g'(1)=3,\, g'(2)=4$.
+      We want to find $h'(1)$ and $h'(2)$. 
+      By the chain rule we know that $h'(x) = g'(f(x))f'(x)$. 
+      So $h'(1) = f'(g(1))g'(1) = 3f'(2) = 6$.
+      Also, $h'(2) = f'(g(2))g'(2) = 4f'(1) = -4$.
+    \item \fbox{4.2.4}
+      Define $f(x) = \frac{1}{1+x}$ for $x\in I$ where $I=(0,1)$. 
+      Observe that if we define $g(x)=1/x$ and $h(x)=1+x$ then 
+      $f\equiv g \circ h$. We see that $h$ is trivially differentiable everywhere.  
+      We claim $g$ is differentiable for positive $x$. 
+      Choose any $x_0\in \mathbb{R}^+=(0, \infty)$ and $\set{x_n} \subset \mathbb{R}^+\setminus \set{x_0}$ 
+      s.t. $x_n\to x_0$. 
+      We see that 
+      \begin{align*}
+        g'(x_0)=\lim_{x\to x_0}\frac{g(x)-g(x_0)}{x-x_0}
+        &=\lim_{n\to\infty}\frac{g(x_n)-g(x_0)}{x_n-x_0}\\
+        &=\lim_{n\to\infty}\frac{1/x_n - 1/x_0}{x_n - x_0}\\
+        &=\lim_{n\to\infty}\frac{1/x_n - 1/x_0}{x_n - x_0}\frac{x_nx_0}{x_nx_0}\\
+        &=\lim_{n\to\infty}\frac{x_0 - x_n}{-(x_0 - x_n)(x_nx_0)}\\
+        &=\lim_{n\to\infty}\frac{-1}{x_nx_0}\\
+        &=\frac{-1}{x_0}\lim_{n\to\infty}\frac{1}{x_n}\\
+        &=\frac{-1}{x_0^2}
+      \end{align*}
+      So $g$ is differentiable for positive reals. Observe that
+      $x\in I\implies 0 < x < 1\implies 1 < x + 1 < 2\implies h(I) = (1, 2) \subset \mathbb{R}^+$ 
+      so $f\equiv g\circ h: I\to \mathbb{R}$ is differentiable on $I$ by the chain rule. 
+      Moreover, given $x_0\in I$, $1 < h(x_0) < 2\implies \frac{1}{2} < \frac{1}{h(x_0)} = f(x_0) < 1$ 
+      because $1/y$ is strictly decreasing for positive $y$ ($u < v\implies 1/v < 1/u$).
+      Thus $f(I) = (\frac{1}{2}, 1)$.
+      Now choose $u,\,v\in I$ s.t. $u < v$. 
+      Then $u < v \implies u+1 < v+1 \implies 1 < \frac{v+1}{u+1} \implies \frac{1}{v+1} < \frac{1}{u+1}$ 
+      so $f$ is strictly decreasing on $I$, suggesting it has an inverse. We can now find 
+      the inverse of $f$ directly by solving for $y$ in $x = \frac{1}{y+1}$ 
+      given $y \in f(I) \subset \mathbb{R}^+$. 
+      \begin{align*}
+        x=\frac{1}{y+1} &\implies x(y+1)=1\\
+        &\implies y+1 = 1/x\\
+        &\implies y=1/x-1\\
+        &\implies f^{-1}(x) = g(x) - 1
+      \end{align*}
+      Then it follows that $(f^{-1})'(x) = g'(x) - 0 = \frac{-1}{x^2}$.
+      Formula 4.6 tells us that 
+      $(f^{-1})'(x) = \frac{1}{f'(f^{-1}(x))}=\frac{1}{f'(1/x-1)}$.
+      By the chain rule, $f'(x) = g'(h(x))h'(x) = g'(x+1) = \frac{-1}{(x+1)^2}$.
+      We see that 
+      \begin{align*}
+        (f^{-1})'(x) &= \frac{1}{f'(f^{-1}(x))}\\
+        &= \frac{1}{f'(1/x-1)}\\
+        &= \frac{1}{\frac{-1}{\left[(1/x-1)+1\right]^2}}\\
+        &= \frac{1}{\frac{-1}{\left(1/x\right)^2}}\\
+        &= \frac{\frac{1}{x^2}}{-1}\\
+        &= \frac{-1}{x^2}\\
+        % &= \frac{1}{\frac{-1}{\left[\left(\frac{1}{x}-1\right) + 1\right]^2}}\\
+        % &= -\left[\left(\frac{1}{x}-1\right) + 1\right]^2\\
+        % &= -\left[\left(\frac{1}{x}-1\right)^2 + 2\left(\frac{1}{x}-1\right) + 1\right]\\
+        % &= -\left[\left(\frac{1}{x^2}-\frac{2}{x} + 1\right) + \frac{2}{x}-2 + 1\right]\\
+        % &= -\left[\frac{1}{x^2}-\frac{2}{x} + 1 + \frac{2}{x} - 2 + 1\right]\\
+        % &= -\frac{1}{x^2}
+      \end{align*}
+      Which matches the derivative we derived previously.
+    \item \fbox{4.2.5}
+      \begin{proof}
+        Let $I$ be a neighborhood of $x_0$ and let $f:I\to\mathbb{R}$ 
+        be continuous, strictly monotone, and differentiable at $x_0$. 
+        Assume that $f'(x_0) = 0$. 
+        We will show that $f^{-1}:f(I)\to\mathbb{R}$ is not differentiable 
+        at $f(x_0)$. 
+        Define $g: f(I)\to \mathbb{R}$ as $g(x) = f^{-1}(f(x)) = x$.
+        % Since $f$ maps $I$, an interval, to $\mathbb{R}$ and is 
+        % strictly monotone, it follows that $f^{-1}$ 
+        % is continuous on $f(I)$. 
+        By way of contradiction, suppose $f^{-1}$ is 
+        differentiable at $f(x_0)$. Then by the chain rule 
+        $g'(x_0) = (f^{-1} \circ f)'(x) = (f^{-1})'(f(x_0))f'(x_0)$.
+        By assumption $f'(x_0) = 0$ so $g'(x_0) = (f^{-1})'(f(x_0))\cdot 0 = 0$. 
+        But $g(x) = x$ so we can find its derivative directly. 
+        Suppose $x_0\in I$ and $\set{x_n}\subset I\setminus \set{x_0}$ s.t. $x_n\to x_0$.
+        Then $g'(x) = \lim_{n\to\infty}\frac{g(x_n)-g(x_0)}{x_n-x_0}
+        =\lim_{n\to\infty}\frac{x_n-x_0}{x_n-x_0}$. 
+        Since $x_0\not\in x_n$ it follows 
+        that $x_n - x_0 \neq 0$ and thus $g'(x) = 1$.
+        But this contradicts the result of the chain rule, 
+        so the original assumption that $f^{-1}$ is 
+        differentiable at $f(x_0)$ is false, 
+        i.e. $f^{-1}$, defined as such, is not differentiable at  $f(x_0)$.
+      \end{proof}
+    \item \begin{proof}
+      Suppose $f:D\to\mathbb{R}$ is Lipschitz  
+      and that for some $a\in D$, the function 
+      $g: f(D)\to\mathbb{R}$ is differentiable at $f(a) = b$.
+      Assuming that $g'(b) = 0$, 
+      we will show that $g\circ f$ is differentiable 
+      at $a$ with $(g\circ f)'(a) = 0$. 
+      % We know that $g'(b) = g(f(a)) = \lim_{x\to f(a)}\frac{g(x) - g(f(a))}{x - f(a)} = 0$.
+      
+      Consider the quantity $\lim_{x \to a}\frac{g(f(x))-g(f(a))}{x-a}
+      =\lim_{n\to\infty}\frac{g(f(x_n))-g(f(a))}{x_n-a}$. 
+      By definition this is equivalent to $(g\circ f)'(a)$, and we claim this limit exists and is zero.
+      Choose any $\set{x_n}\subset D\setminus \set{a}$ s.t. $\lim_{n\to\infty}x_n = a$.
+      Denote $y_n=f(x_n)$, then 
+      whenever $y_n \neq b$, it is true that $\frac{y_n - b}{y_n - b} = 1$.
+      So it follows that
+      \begin{align*}
+        \lim_{n\to\infty}\frac{g(f(x_n))-g(f(a))}{x_n-a}&= \lim_{n\to\infty}\frac{g(y_n)-g(b)}{x_n-a}\frac{y_n - b}{y_n - b}\\
+        &= \lim_{n\to\infty}\frac{g(y_n)-g(b)}{y_n-b}\frac{y_n - b}{x_n - a}
+      \end{align*}
+      is the derivative $(g\circ f)'(a)$.
+      To handle cases where $y_n=b$, we can use the function $H(y)$:
+      \[
+        H(y) = \begin{cases}
+          \frac{g(y) - g(b)}{y - b} & y \neq b\\
+          g'(b) & y = b\\
+        \end{cases}
+      \]
+      We claim $\lim_{n\to\infty}\left[H(y_n)\frac{y_n-b}{x_n-a}\right] = (g\circ f)'(a)$. 
+      If $y_n \neq b$, this follows directly from the quantity we derived above. Otherwise, 
+      if $y_n = b$, we can see that 
+      $\frac{g(y_n) - g(b)}{x_n - a}=\frac{0}{x_n - a}=0$, i.e. the difference quotient is zero and 
+      thus the derivative is zero. Observe that 
+      $y_n = b\implies H(y_n)\frac{y_n-b}{x_n-a} = g'(b)\cdot 0 = 0$, 
+      so $\forall x\in D,\, H(y_n)\frac{y_n-b}{x_n-a} = \frac{g(y_n) - g(b)}{x_n - a}$.
+      To prove the existence and value of the limit, 
+      it therefore suffices to show that $\lim_{n\to\infty}x_n = a \implies 
+      \lim_{n\to\infty}\left[H(y_n)\frac{y_n-b}{x_n-a}\right] = 0$.
+      Since $f$ is continuous, we know $\lim_{n\to\infty}x_n = a \implies \lim_{n\to\infty} y_n = b$, 
+      or equivalently, $\forall \delta' > 0,\, \exists \delta > 0$ s.t. 
+      $|x_n - a| < \delta \implies |y_n - b| < \delta'$.
+      Since $g'(b) = 0$, assuming $y_n \neq b$, then $\forall \epsilon' > 0,\, \exists \delta' > 0$ 
+      s.t. $|y_n - b| < \delta' \implies \left|\frac{g(y_n) - g(b)}{y_n - b} - 0\right| < \epsilon'$.
+      But $H(b) = g'(b)$ so it follows that 
+      $|y_n - b| < \delta' \implies |H(y_n)| < \epsilon'$ for all $y_n$.
+      % \implies -\epsilon < \frac{g(y_n) - g(b)}{y_n - b} < \epsilon$. Now we can multiply this by 
+      % the quantity $\frac{}$
+      Since $f$ is Lipschitz, $\exists C \geq 0$ s.t. $\forall u,\,v \in D,\, |f(u) - f(v)| \leq C|u-v|$.
+      So it is true that $\left|\frac{y_n - b}{x_n - a}\right| \leq C$.
+      
+      \textbf{Case 1} If $C=0$, then $\left|\frac{y_n - b}{x_n - a}\right| = 0$, so it is trivial that 
+      $|y_n - a| < \delta' \implies \left|H(y_n)\frac{y_n - b}{x_n - a}\right| = 0 < \epsilon'$.
+
+      \textbf{Case 2} Now consider the case where $C > 0$. Suppose we choose $\epsilon' = \epsilon/C$ for 
+      any $\epsilon > 0$. Then 
+      \begin{align*}
+        |y_n - b| < \delta' &\implies
+        |H(y)| < \epsilon'\\ 
+        &\implies
+        \left|H(y_n)\frac{y_n - b}{x_n - a}\right| < C\epsilon'=C\frac{\epsilon}{C}=\epsilon\\
+      \end{align*}
+      Considering all prior steps, we have thus established that 
+      \begin{align*}
+        \forall \epsilon, \delta' > 0,\, \exists \delta > 0 \text{ s.t. } |x_n - a| < \delta &\implies |y_n - b| < \delta'\\
+        &\implies |H(y_n)| < \frac{\epsilon}{C}\\
+        &\implies \left|H(y_n)\frac{y_n - b}{x_n - a}\right| < \epsilon\\
+        &\implies \left|\frac{g(f(x_n))-g(f(a))}{x_n-a}\right| < \epsilon\\
+        &\implies \lim_{n\to\infty}\frac{g(f(x_n))-g(f(a))}{x_n-a} = 0
+      \end{align*}
+      Or, more succintly, $\lim_{x\to a}\frac{g(f(x_n))-g(f(a))}{x_n-a} = (g\circ f)'(a) = 0$.
+    \end{proof}
+\end{enumerate}
+% \end{multicols*}
+\end{document}
